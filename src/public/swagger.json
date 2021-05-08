@@ -1,0 +1,556 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Intercom API",
+    "description": "This is a simple API for the project Clone of whatsapp web",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "users",
+      "description": "All info from users"
+    },
+    {
+      "name": "messages",
+      "description": "Operations from messages"
+    },
+    {
+      "name": "chats",
+      "description": "Operation from chats"
+    }
+  ],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "trae todo los usuarios de la DB",
+        "description": "Te trae un array de objetos, dichos objetos son cada uno de los usuarios y su info, en la DB\n",
+        "operationId": "getAllUsers",
+        "responses": {
+          "200": {
+            "description": "Todo OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/users/{userId}": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Find user by ID",
+        "description": "Te trae un solo usuario",
+        "operationId": "getUsertById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID del user a retornar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Update user by ID",
+        "description": "Edita la info de un usuario segun su id",
+        "operationId": "updateUserById",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID del user a editar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/User"
+        },
+        "responses": {
+          "201": {
+            "description": "user updated"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/messages": {
+      "get": {
+        "tags": [
+          "messages"
+        ],
+        "summary": "trae todo los mensajes de la DB",
+        "description": "Te trae un array de objetos, dichos objetos son todos los mensajes que esten en la DB\n",
+        "operationId": "getAllMessages",
+        "responses": {
+          "200": {
+            "description": "Todo OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/messages/{chatId}": {
+      "post": {
+        "tags": [
+          "messages"
+        ],
+        "summary": "create message",
+        "description": "crea un mensaje y lo envia al chat que se le pase por ID",
+        "operationId": "createMessage",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "description": "ID del chat al cual se enviara este mensaje",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Message"
+        },
+        "responses": {
+          "201": {
+            "description": "Created message"
+          },
+          "400": {
+            "description": "Invalid form supplied"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/messages/{messageId}/{chatId}": {
+      "put": {
+        "tags": [
+          "messages"
+        ],
+        "summary": "Find & update one message by ID",
+        "description": "edita un mensaje por su id",
+        "operationId": "updateMessageById",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID del mensaje a editar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "chatId",
+            "in": "path",
+            "description": "ID del chat en donde esta el mensaje a editar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Message update successfully!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Message"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "messages"
+        ],
+        "summary": "find & delete one message by ID",
+        "description": "elimina un mensaje segun su id",
+        "operationId": "deleteMessageById",
+        "parameters": [
+          {
+            "name": "messageId",
+            "in": "path",
+            "description": "ID del mensaje a eliminar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "chatId",
+            "in": "path",
+            "description": "ID del chat en donde esta el mensaje a eliminar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Message deleted!"
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/chats": {
+      "get": {
+        "tags": [
+          "chats"
+        ],
+        "summary": "trae todos los chats de la DB",
+        "description": "Te trae un array de objetos, dichos objetos son todos los chats que esten en la DB, relacionados con ese usuario\n",
+        "operationId": "getAllChats",
+        "responses": {
+          "200": {
+            "description": "Todo OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Chat"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/chats/{chatId}": {
+      "get": {
+        "tags": [
+          "chats"
+        ],
+        "summary": "Find chat by ID",
+        "description": "Te trae un solo chat",
+        "operationId": "getChatById",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "description": "ID del chat a retornar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todo OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Chat"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "chats"
+        ],
+        "summary": "find & delete one chat by ID",
+        "description": "elimina un chat segun su id",
+        "operationId": "deleteChatById",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "description": "ID del chat a eliminar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "chat deleted!"
+          },
+          "400": {
+            "description": "Invalid chatID supplied"
+          },
+          "404": {
+            "description": "chat not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/chats/{userId}": {
+      "post": {
+        "tags": [
+          "chats"
+        ],
+        "summary": "create chat",
+        "description": "crea un chat con el usuario que se pase por id",
+        "operationId": "createChat",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID del usuario con el cual se creara el chat",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created chat"
+          },
+          "400": {
+            "description": "Invalid userId supplied"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "required": [
+          "id",
+          "info",
+          "name",
+          "password",
+          "phone_number",
+          "photo",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "ObjectId",
+            "example": "607cb8eed42bcc7263c07838"
+          },
+          "name": {
+            "type": "string",
+            "example": "Juan Sebastián Agudelo"
+          },
+          "photo": {
+            "type": "string",
+            "example": "https://i.imgur.com/2ds4WjY.png"
+          },
+          "info": {
+            "type": "string",
+            "description": "Esto lo que aparece en el estado dentro el perfil de la persona"
+          },
+          "username": {
+            "type": "string",
+            "description": "identificador unico de la persona dentro de la app"
+          },
+          "password": {
+            "type": "string"
+          },
+          "phone_number": {
+            "type": "number",
+            "description": "numero de la persona, es un identificador unico dentro de la app"
+          }
+        }
+      },
+      "Message": {
+        "required": [
+          "chat_id",
+          "id",
+          "messgae",
+          "user_id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "ObjectId",
+            "example": "607cb8eed42bcc7263c07838"
+          },
+          "message": {
+            "type": "string",
+            "description": "Este es el texto del mensaje que se envia"
+          },
+          "user_id": {
+            "$ref": "#/components/schemas/User"
+          },
+          "chat_id": {
+            "$ref": "#/components/schemas/Chat"
+          }
+        }
+      },
+      "Chat": {
+        "required": [
+          "id",
+          "user_id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "ObjectId",
+            "example": "607cb8eed42bcc7263c07838"
+          },
+          "user_id": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "User": {
+        "description": "Cualquiera de estos capos de puede editara excepción del ID",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        },
+        "required": true
+      },
+      "Message": {
+        "description": "Solo debes de mandat el texto del mensaje",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string",
+              "format": "message"
+            }
+          }
+        },
+        "required": true
+      }
+    }
+  }
+}
