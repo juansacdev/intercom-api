@@ -16,6 +16,14 @@
 
 ### 🏠 [Homepage](https://github.com/juansacok/intercom-api#readme)
 
+</br>
+
+### 📑 Documentation
+This is the [API documentation](https://intercom--api.herokuapp.com/api/doc)
+
+***
+</br>
+
 ## Install
 
 ```sh
