@@ -37,6 +37,7 @@ app.use(
 		contentSecurityPolicy: false,
 	}),
 );
+app.use(express.static('src/public'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
