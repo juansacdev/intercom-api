@@ -1,4 +1,5 @@
 const response = require("../../lib/response");
+const { socket } = require('../../../socket')
 const {
 	getAllMessages,
     createOneMessage,
@@ -48,6 +49,7 @@ const createMessage = async (req, res) => {
 	};
 
 	try {
+		socket.io.emit('message', messageData)
 		const data = await createOneMessage(messageData);
 		return response.success({
 			res,
