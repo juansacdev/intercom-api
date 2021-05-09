@@ -3,17 +3,6 @@
   "version": "1.0.0",
   "description": "An API for the project INTERCOM, it's about a simulator of WhatsApp Web",
   "main": "src/index.js",
-  "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
-  },
-  "keywords": [
-    "js",
-    "sockets",
-    "express"
-  ],
-  "author": "Juan Sebastián Agudelo @juansacok <juansac.me@gmail.com>",
-  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^9.0.0",
@@ -23,5 +12,24 @@
     "morgan": "^1.10.0",
     "socket.io": "^4.0.2",
     "swagger-ui-express": "^4.1.6"
-  }
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": [
+    "js",
+    "sockets",
+    "express"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juansacok/intercom-api.git"
+  },
+  "author": "Juan Sebastián Agudelo @juansacok <juansac.me@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/juansacok/intercom-api/issues"
+  },
+  "homepage": "https://github.com/juansacok/intercom-api#readme"
 }
