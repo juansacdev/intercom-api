@@ -5,6 +5,12 @@
     "description": "This is a simple API for the project Clone of whatsapp web",
     "version": "1.0.0"
   },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/juansac/INTERCOM/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    }
+  ],
   "tags": [
     {
       "name": "users",
@@ -177,6 +183,18 @@
               "type": "integer",
               "format": "int64"
             }
+          },
+          {
+            "name": "userId",
+            "in": "header",
+            "description": "ID del usuario que envia este mensaje",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "requestBody": {
@@ -195,7 +213,7 @@
         }
       }
     },
-    "/api/messages/{messageId}/{chatId}": {
+    "/api/messages/{messageId}": {
       "put": {
         "tags": [
           "messages"
@@ -215,20 +233,11 @@
               "type": "integer",
               "format": "int64"
             }
-          },
-          {
-            "name": "chatId",
-            "in": "path",
-            "description": "ID del chat en donde esta el mensaje a editar",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
           }
         ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Message"
+        },
         "responses": {
           "201": {
             "description": "Message update successfully!",
@@ -260,18 +269,6 @@
             "name": "messageId",
             "in": "path",
             "description": "ID del mensaje a eliminar",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          },
-          {
-            "name": "chatId",
-            "in": "path",
-            "description": "ID del chat en donde esta el mensaje a eliminar",
             "required": true,
             "style": "simple",
             "explode": false,
@@ -318,6 +315,53 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/api/chats/{toUserId}": {
+      "post": {
+        "tags": [
+          "chats"
+        ],
+        "summary": "create chat",
+        "description": "crea un chat con el usuario que se pase por id",
+        "operationId": "createChat",
+        "parameters": [
+          {
+            "name": "toUserId",
+            "in": "path",
+            "description": "ID del usuario con el cual se creara el chat",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "header",
+            "description": "ID del usuario con el cual se creara el chat",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created chat"
+          },
+          "400": {
+            "description": "Invalid userId supplied"
           },
           "500": {
             "description": "Internal server error"
@@ -402,41 +446,6 @@
           }
         }
       }
-    },
-    "/api/chats/{userId}": {
-      "post": {
-        "tags": [
-          "chats"
-        ],
-        "summary": "create chat",
-        "description": "crea un chat con el usuario que se pase por id",
-        "operationId": "createChat",
-        "parameters": [
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "ID del usuario con el cual se creara el chat",
-            "required": true,
-            "style": "simple",
-            "explode": false,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created chat"
-          },
-          "400": {
-            "description": "Invalid userId supplied"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
     }
   },
   "components": {
@@ -485,7 +494,6 @@
       },
       "Message": {
         "required": [
-          "chat_id",
           "id",
           "messgae",
           "user_id"
@@ -503,15 +511,13 @@
           },
           "user_id": {
             "$ref": "#/components/schemas/User"
-          },
-          "chat_id": {
-            "$ref": "#/components/schemas/Chat"
           }
         }
       },
       "Chat": {
         "required": [
           "id",
+          "message_id",
           "user_id"
         ],
         "type": "object",
@@ -523,6 +529,9 @@
           },
           "user_id": {
             "$ref": "#/components/schemas/User"
+          },
+          "message_id": {
+            "$ref": "#/components/schemas/Message"
           }
         }
       }
@@ -540,7 +549,7 @@
         "required": true
       },
       "Message": {
-        "description": "Solo debes de mandat el texto del mensaje",
+        "description": "Solo debes de mandar el texto del mensaje",
         "content": {
           "application/json": {
             "schema": {
