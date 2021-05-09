@@ -16,6 +16,13 @@ createUsers()
 // Sockets
 sockets.connect(server);
 
+app.get('/', (req, res) => {
+	if (dev) {
+		res.redirect('http://localhost:3000/api/doc/')
+	}
+	res.redirect('https://intercom--api.herokuapp.com/api/doc/')
+})
+
 // Middlewares
 app.use(
 	cors({
@@ -43,5 +50,5 @@ router(app);
 
 // Server
 server.listen(port, () =>
-	console.log(`I'm alive. API doc on: http://localhost:${port}/api/doc/ 💯`),
+	console.log(`I'm alive. http://localhost:${port} 💯`),
 );

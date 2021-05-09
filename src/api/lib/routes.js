@@ -3,6 +3,7 @@ const message = require('../components/Message/network')
 const chat = require('../components/Chat/network')
 const swaggerUi = require ('swagger-ui-express')
 const swaggerDoc = require('../../public/swagger.json')
+const { dev } = require('../../config')
 
 const routes = server => {
     server.use('/api/users', user)
