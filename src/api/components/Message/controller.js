@@ -76,6 +76,7 @@ const editMessageById = async (req, res) => {
 
 	try {
 		const { messageId } = req.params
+		socket.io.emit('message', messageData)
 		const data = await updateMessageById(messageId, messageData)
 
 		if (!data) {
