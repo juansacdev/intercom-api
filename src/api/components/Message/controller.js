@@ -29,7 +29,7 @@ const createMessage = async (req, res) => {
 		message,
 	} = req.body;
 
-	const { userId } = req.headers
+	const { userid } = req.headers
 	const { chatId } = req.params
 
 	if (!message) {
@@ -43,7 +43,7 @@ const createMessage = async (req, res) => {
 
 	const messageData = {
 		message,
-		user_id: userId,
+		user_id: userid,
 		chat_id: chatId,
 	};
 

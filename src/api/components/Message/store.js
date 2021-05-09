@@ -92,7 +92,7 @@ const updateMessageById = (messageId, messageData) => {
 	});
 };
 
-const deleteOneMessageById = async (messageId, userId) => {
+const deleteOneMessageById = async (messageId) => {
 	try {
 		const messageFound = Message.findById(messageId);
 
