@@ -24,14 +24,14 @@ const getAllMessages = () => {
 const createOneMessage = (messageData) => {
 	return new Promise(async (resolve, reject) => {
 		try {
+			const {chat_id: chatId, ...msgData } = messageData
 			// Crea Message
-			const messageCreated = new Message(messageData);
+			const messageCreated = new Message(msgData);
 
 			await messageCreated.save();
 
 			// Se agrega Message al chat donde se envio
 			const { _id: messageId } = messageCreated;
-			const { chat_id: chatId } = messageData;
 
 			const chatUpdated = await Chat.findByIdAndUpdate(
 				chatId,
