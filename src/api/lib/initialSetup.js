@@ -1,3 +1,4 @@
+const Chat = require("../../database/models/chat");
 const User = require("../../database/models/user");
 
 const createUsers = async () => {
@@ -29,6 +30,22 @@ const createUsers = async () => {
 	}
 };
 
+const createChat = async () => {
+	const count = await Chat.estimatedDocumentCount();
+
+	if (count) {
+		return;
+	}
+
+	await Promise.all([
+		new Chat({
+			users: ['60977601aa71c92fa9b453fc', '60977601aa71c92fa9b453fd'],
+			messages: []
+		}).save(),
+	])
+}
+
 module.exports = {
 	createUsers,
+	createChat,
 };

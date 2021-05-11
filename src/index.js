@@ -7,11 +7,12 @@ const server = http.Server(app)
 const sockets = require("./socket");
 const { port, dev } = require("./config");
 const router = require("./api/lib/routes");
-const { createUsers } = require('./api/lib/initialSetup')
+const { createUsers, createChat } = require('./api/lib/initialSetup')
 
 // Init
 require("./database");
 createUsers()
+createChat()
 
 // Sockets
 sockets.connect(server);
