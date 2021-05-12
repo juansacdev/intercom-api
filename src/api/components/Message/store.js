@@ -24,7 +24,7 @@ const getAllMessages = () => {
 const createOneMessage = (messageData) => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			const {chat_id: chatId, ...msgData } = messageData
+			const {chatId, ...msgData } = messageData
 			// Crea Message
 			const messageCreated = new Message(msgData);
 

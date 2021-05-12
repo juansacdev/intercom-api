@@ -45,7 +45,7 @@ const createMessage = async (req, res) => {
 	const messageData = {
 		message,
 		user: userid,
-		chat_id: chatId,
+		chatId,
 	};
 
 	try {
