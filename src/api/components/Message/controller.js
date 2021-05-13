@@ -51,6 +51,7 @@ const createMessage = async (req, res) => {
 	try {
 		socket.io.emit('message', messageData)
 		const data = await createOneMessage(messageData);
+		console.log(data.time)
 		return response.success({
 			res,
 			data,
