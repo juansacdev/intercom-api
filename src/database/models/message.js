@@ -8,7 +8,11 @@ const MessageSchema = new Schema(
 		},
 		user: {
 			type: Schema.Types.ObjectId,
-			ref: 'User',
+			ref: "User",
+		},
+		time: {
+			type: String,
+			default: `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
 		},
 	},
 	{
