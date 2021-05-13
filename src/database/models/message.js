@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 const dateHour = new Date().getHours() - 5
-const dateMinutes = new Date().getMinutes()
+const dateMinutes = new Date().getMinutes() + 3
 const dateSeconds = new Date().getSeconds()
 const fullDate = `${dateHour}:${dateMinutes}:${dateSeconds}`
 
